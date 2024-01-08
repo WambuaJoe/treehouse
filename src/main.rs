@@ -35,7 +35,7 @@ fn user_input() {
         .trim()
         .to_lowercase();
 
-    let visitor_list = [
+    let mut visitor_list = vec![
         Visitor::new("wambua", "Hello Wambua, enjoy the Tree"),
         Visitor::new("mwangi", "Hello Mwangi, enjoy the Tree"),
         Visitor::new("Wandeto", "Hello Wandeto, enjoy the Tree"),
@@ -46,9 +46,19 @@ fn user_input() {
         .iter()
         .find(|visitor| visitor.name == name);
 
-    match authorized {
-        Some(visitor) => visitor.greet_visitor(),
-        None => println!("You're not on the visitor list, You need to leave")
+    loop {
+        println!("Enter name: (Leave empty and press Enter to quit program)");
+        match authorized {
+            Some(visitor) => visitor.greet_visitor(),
+            None => {
+                if name.is_empty() {
+                    break;
+                } else {
+                    println!("{} not on visitor list", name);
+                    visitor_list.push(Visitor::new(&name, "New amigo"));
+                }
+            }
+        }
     }
 
     if allow_in {
