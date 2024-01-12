@@ -1,5 +1,6 @@
 use std::io::stdin;
 #[derive(Debug)]
+#[allow(unused_variables)]
 
 struct Visitor {
     name: String,
@@ -18,6 +19,7 @@ impl Visitor {
     }
 }
 
+enum VisitorAction {}
 
 fn main() {
     println!("Enter name:");
@@ -31,18 +33,16 @@ fn user_input() {
     stdin()
         .read_line(&mut name)
         .expect("Failed to read");
-    name
-        .trim()
-        .to_lowercase();
+    name.trim().to_lowercase();
 
     let mut visitor_list = vec![
-        Visitor::new("wambua", "Hello Wambua, enjoy the Tree"),
-        Visitor::new("mwangi", "Hello Mwangi, enjoy the Tree"),
-        Visitor::new("Wandeto", "Hello Wandeto, enjoy the Tree"),
+        Visitor::new("Joseph", "Hello Joseph, enjoy the Tree"),
+        Visitor::new("Kevin", "Hello Kevin, enjoy the Tree"),
+        Visitor::new("Ian", "Hello Ian, enjoy the Tree"),
     ];
     let allow_in = false;
 
-    let authorized = visitor_list
+    let authorized = &visitor_list
         .iter()
         .find(|visitor| visitor.name == name);
 
@@ -55,7 +55,7 @@ fn user_input() {
                     break;
                 } else {
                     println!("{} not on visitor list", name);
-                    visitor_list.push(Visitor::new(&name, "New amigo"));
+                    &mut visitor_list.push(Visitor::new(&name, "New amigo"));
                 }
             }
         }
